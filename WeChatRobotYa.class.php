@@ -6,13 +6,23 @@ class WeChatRobotYa{
 	
 	public $MsgType ='';
 	public $ToUserName ='';			//gh_747e2105165a
-	public $FromUserName ='';		//op181vw09SsmHbIFe99T0YZxGMxE
+	public $FromUserName ='';		//op181vw09SsmHbIcodenightFe99
     public $xmlObj =null;
+    public $modelFlag = '测试';
     
-    private $Token = 'codenight';	//令牌(Token),必填与微信公众号配置一致
-    private $logState =  1;  //0- 不开启 1-记录到xml文件 2-记录到数据库 3-同时记录到文件和数据库
+    private $Token = '';	
     
-    public function main(){
+    private $model = '';
+
+    private $logLv = 1;
+    
+    public function __construct($Token='codenight',$logLv=1,$model='developer'){
+    	$this->Token = $Token;
+    	$this->logLv = $logLv;
+    	$this->model = $model;
+    }//
+    
+    public function listen(){
 		if (!isset($_GET['echostr'])) {
 		    $this->reply();
 		}else{
@@ -28,16 +38,14 @@ class WeChatRobotYa{
         $nonce = $_GET["nonce"];
 		$echostr = $_GET["echostr"];
 		
-		$token = $this->Token;
-		 
-        $tmpArr = [$token, $timestamp, $nonce];
+        $tmpArr = [$this->Token, $timestamp, $nonce];
 		
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);
         $tmpStr = sha1($tmpStr);
         if($tmpStr == $signature){
             echo $echostr;
-            die;
+            exit;
         }
     }//valid
     
@@ -46,7 +54,7 @@ public function reply(){
 	$postStr = file_get_contents("php://input");
 
 	if (!empty($postStr)){
-		$this->log('收到',$postStr);
+		$this->log('用户',$postStr);
 		$this->init($postStr);
 		
 		switch($this->MsgType){
@@ -62,7 +70,7 @@ public function reply(){
 		echo 'success';
 	}
 	
-}//replyCenter
+}//reply
 
 public function init($postStr){
 	$xmlObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -78,20 +86,23 @@ public function solveText(){
 	
 	preg_match("/\d+\.?\d*/i", $Content, $match);
 	
-	//自动回答MySQL错误
+	//自动回答MySQL错误,注意并列关系
 	if(count($match)>0){
 		$num = $match[0];
 		$this->mysqlErrorMsg($num);
+	}else{
+		if(strstr($Content, "图文")){
+			$this->replyArticleList();
+		}else if(strstr($Content, "你好")||strstr($Content, "好")){
+			$Content = "小雅:欢迎你";
+	        $this->replyText($Content);
+		}else{
+	    	$Content = date("Y-m-d H:i:s",time())."\n小雅:eeemmmmm...我是刚出生的机器人,现在还不能理解你说的内容,已记录留言转告主人。\n发送[图文]两字 获取文章列表";
+	        $this->replyText($Content);
+		}
 	}
 
-	if(strstr($Content, "图文")){
-		$this->replyArticleList();
-	}else{
-    	$Content = date("Y-m-d H:i:s",time())."\n主人不在我是机器人[小雅],目前IQ为-1还不能理解你说的内容\n发送【图文】两字 获取文章列表";
-       
-	}
 	
-	$this->replyText($Content);
 }//solveText
 
 
@@ -120,17 +131,17 @@ public function replyArticleList(){
 	$Articles = '';
 	$arr = [
 		[
+            "Title"=>"编程话江湖，原力铸神兵", 
+            "Description"=>"111", 
+            "PicUrl"=>"http://mmbiz.qpic.cn/mmbiz_jpg/icuwTZfrQnGMOKbJbo7Vv6Crk3icOOVX4j7HbbAT4uphYS11rib8SPOfjSXby4bwYK7K5afNWp2WwLPPFAN7zFvBw/0?wx_fmt=jpeg", 
+            "Url" =>"https://mp.weixin.qq.com/s?__biz=MzIwNzk0NjE1MQ==&mid=2247484116&idx=1&sn=b3444ca18f25343bac3939d31602bea5&chksm=970bea1ca07c630ac39b83882b4cd30356e1dad270272f87de860b92a2c4f9f022969059b81f#rd",
+		],
+		[
   			"Title"=>"php特性与mysqli融合铸造数据库插入之剑", 
             "Description"=>"", 
             "PicUrl"=>"http://mmbiz.qpic.cn/mmbiz_jpg/icuwTZfrQnGMTnr93wxJJiaJPSLyaAa3HXg6yS2X0Gv0ib6vN8cQ7y3DAiacL1CkCAxZOKzpGKm8XWV546oicEGFv7g/0?wx_fmt=jpeg", 
             "Url" =>"https://mp.weixin.qq.com/s?__biz=MzIwNzk0NjE1MQ==&mid=2247484116&idx=2&sn=247efc5f4f5d65f03ec3036c7e6b0005&chksm=970bea1ca07c630af50d0ce6d715436b1e39b362a0d9aafe91a45d791f9adbb375e834bf6867#rd",
 		
-		],
-		[
-            "Title"=>"编程话江湖，原力铸神兵", 
-            "Description"=>"111", 
-            "PicUrl"=>"http://mmbiz.qpic.cn/mmbiz_jpg/icuwTZfrQnGMOKbJbo7Vv6Crk3icOOVX4j7HbbAT4uphYS11rib8SPOfjSXby4bwYK7K5afNWp2WwLPPFAN7zFvBw/0?wx_fmt=jpeg", 
-            "Url" =>"https://mp.weixin.qq.com/s?__biz=MzIwNzk0NjE1MQ==&mid=2247484116&idx=1&sn=b3444ca18f25343bac3939d31602bea5&chksm=970bea1ca07c630ac39b83882b4cd30356e1dad270272f87de860b92a2c4f9f022969059b81f#rd",
 		],
 	];
 	
@@ -154,7 +165,6 @@ public function replyText($Content){
 	$param = [
 		'Content'=>$Content,
 	];
-	
 	$this->echoXMLStr('text',$param);
 }
 
@@ -163,7 +173,6 @@ public function replyImage($MediaId){
 	$param = [
 		'MediaId'=>$MediaId,
 	];
-	
 	$this->echoXMLStr('image',$param);
 }
 
@@ -185,7 +194,13 @@ public function echoXMLStr($type,$param){
 	$this->log('回复',$xmlStr);
 	
 	echo $xmlStr;
-	die;
+	
+	if($this->model==$this->modelFlag){
+		return;
+	}else{
+		exit;
+	}
+	
 }
 
 
@@ -300,7 +315,7 @@ public function mysqlErrorMsg(int $code){
 
 public function log($type,$content){
 	
-	switch($this->logState){
+	switch($this->logLv){
 		case 3:
 			$this->dbLog($type,$content);
 			$this->fileLog($type,$content);
@@ -336,12 +351,23 @@ public function dbLog($type,$content){
 
 public function fileLog($type,$content){
 	$max_size = 1024000;//斜杠的方向
-    $fileName = date('Y-m-d').'_log.xml';
-    $dir = dirname(__FILE__).'/log/';//
+	
+    
+    $dir = dirname(__FILE__).'/log/';
     if(!is_dir($dir)){
     	mkdir($dir);
     }
-    echo dirname(__FILE__);
+    
+
+	$name = date('Y-m-d');
+	if($this->model==$this->modelFlag){
+		$fileName= $name.'_test_log.xml';
+		echo "[$type] 请在 $dir$fileName 中查阅日志<br>";
+	}else{
+		$fileName= $name.'_log.xml';
+	}
+    
+    
     if(file_exists($fileName) && (abs(filesize($fileName)) > $max_size)){
     	unlink($fileName);
     }

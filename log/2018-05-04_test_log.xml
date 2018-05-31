@@ -1,0 +1,51 @@
+[收到]2018-05-04_17.33.42
+<xml>
+	<ToUserName><![CDATA[gh_747e2105165a]]></ToUserName>
+	<FromUserName><![CDATA[op181vw09SsmHbIcodenightFe99]]></FromUserName>
+	<CreateTime>1525426422</CreateTime>
+	<MsgType><![CDATA[text]]></MsgType>
+	<Content><![CDATA[图文]]></Content>
+</xml>
+
+
+[回复]2018-05-04_17.33.42
+<xml>
+    <ToUserName><![CDATA[op181vw09SsmHbIcodenightFe99]]></ToUserName>
+    <FromUserName><![CDATA[gh_747e2105165a]]></FromUserName>
+    <CreateTime>1525426422</CreateTime>
+    <MsgType><![CDATA[news]]></MsgType>
+    <ArticleCount>2</ArticleCount>
+    <Articles><item>
+	<Title><![CDATA[编程话江湖，原力铸神兵]]></Title>
+	<Description><![CDATA[111]]></Description>
+	<PicUrl><![CDATA[http://mmbiz.qpic.cn/mmbiz_jpg/icuwTZfrQnGMOKbJbo7Vv6Crk3icOOVX4j7HbbAT4uphYS11rib8SPOfjSXby4bwYK7K5afNWp2WwLPPFAN7zFvBw/0?wx_fmt=jpeg]]></PicUrl>
+	<Url><![CDATA[https://mp.weixin.qq.com/s?__biz=MzIwNzk0NjE1MQ==&mid=2247484116&idx=1&sn=b3444ca18f25343bac3939d31602bea5&chksm=970bea1ca07c630ac39b83882b4cd30356e1dad270272f87de860b92a2c4f9f022969059b81f#rd]]></Url>
+</item><item>
+	<Title><![CDATA[php特性与mysqli融合铸造数据库插入之剑]]></Title>
+	<Description><![CDATA[]]></Description>
+	<PicUrl><![CDATA[http://mmbiz.qpic.cn/mmbiz_jpg/icuwTZfrQnGMTnr93wxJJiaJPSLyaAa3HXg6yS2X0Gv0ib6vN8cQ7y3DAiacL1CkCAxZOKzpGKm8XWV546oicEGFv7g/0?wx_fmt=jpeg]]></PicUrl>
+	<Url><![CDATA[https://mp.weixin.qq.com/s?__biz=MzIwNzk0NjE1MQ==&mid=2247484116&idx=2&sn=247efc5f4f5d65f03ec3036c7e6b0005&chksm=970bea1ca07c630af50d0ce6d715436b1e39b362a0d9aafe91a45d791f9adbb375e834bf6867#rd]]></Url>
+</item></Articles>
+</xml>
+
+
+[收到]2018-05-04_17.33.50
+<xml>
+	<ToUserName><![CDATA[gh_747e2105165a]]></ToUserName>
+	<FromUserName><![CDATA[op181vw09SsmHbIcodenightFe99]]></FromUserName>
+	<CreateTime>1525426430</CreateTime>
+	<MsgType><![CDATA[text]]></MsgType>
+	<Content><![CDATA[你好]]></Content>
+</xml>
+
+
+[回复]2018-05-04_17.33.50
+<xml>
+    <ToUserName><![CDATA[op181vw09SsmHbIcodenightFe99]]></ToUserName>
+    <FromUserName><![CDATA[gh_747e2105165a]]></FromUserName>
+    <CreateTime>1525426430</CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[欢迎你]]></Content>
+</xml>
+
+

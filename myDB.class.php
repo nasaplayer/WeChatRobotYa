@@ -3,7 +3,7 @@
 ** @描述 php特性与mysqli构造智能数据库插入类,根据表结构自适应参数类型
 ** 
 ** @作者 百万强心剂 <nasaplayer@qq.com> 
-** @最新修改 2018年5月3日17:11  (2018年3月11日起)
+** @最新修改 2018年5月3日17:11  (创建于2018年3月11日)
 ** @版本要求 PHP5.6+ 用到了... 操作符
 ** 
 */
@@ -88,8 +88,6 @@ public function db(){
 				$needData[] = $param;
 			}
 		}
-	
-		
 	//第二种、循环输入参数数组
 //		foreach($data as $key=>$param){
 //			$type =  @$fieldTypeArr[$key];
